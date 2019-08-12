@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>注册新用户</title>
+		<script type="text/javascript" src="/static/sm3.js"></script>
+		<script type="text/javascript">
+			function checkForm() {
+				if (!document.getElementById("name").value) {
+					document.getElementById("checkname").text = "请输入用户名";
+					return false;
+				} else if (!document.getElementById("pass").value) {
+					document.getElementById("checkname").text = "";
+					document.getElementById("checkpass").text = "请输入密码";
+					return false;
+				} else if (!document.getElementById("conf").value) {
+					document.getElementById("checkpass").text = "";
+					document.getElementById("checkconf").text = "请输入确认密码";
+					return false;
+				}
+				document.getElementById("checkconf").text = "";
+				document.getElementById("pass").value = sm3Digest(document.getElementById("pass").value);
+				return true;
+			}
+		</script>
+	</head>
+	<body>
+		<h1>注册新用户</h1>
+		<form method="POST" action="/register" onsubmit="return checkForm()">
+			<table>
+				<tr>
+					<td>用户名：</td>
+					<td><input type="text" name="username" id="name"></td>
+					<td><a id="checkname"></a></td>
+				</tr>
+				<tr>
+					<td>密码：</td>
+					<td><input type="password" name="password" id="pass"></td>
+					<td><a id="checkpass"></a></td>
+				</tr>
+				<tr>
+					<td>确认密码：</td>
+					<td><input type="password" id="conf"></td>
+					<td><a id="checkconf"></a></td>
+				</tr>
+				<tr>
+					<td colspan="3"><button type="submit">生成私钥注册</button></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>

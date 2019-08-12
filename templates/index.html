@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8" />
+		<script type="text/javascript" src="/static/sm3.js"></script>
+		<script type="text/javascript">
+			function checkForm() {
+				if (!document.getElementById("addr").value) {
+					document.getElementById("checkaddr").text = "请输入收币方地址";
+					return false;
+				} else if (!document.getElementById("amount").value) {
+					document.getElementById("checkaddr").text = "";
+					document.getElementById("checkamo").text = "数额不能为空或0";
+					return false;
+				} else if (!document.getElementById("pass").value) {
+					document.getElementById("checkamo").text = "";
+					document.getElementById("checkpass").text = "请输入登录密码";
+					return false;
+				} else if (!document.getElementById("key").value) {
+					document.getElementById("checkpass").text = "";
+					document.getElementById("checkkey").text = "请输入至少一个共享密钥";
+					return false;
+				} else {
+					document.getElementById("checkkey").text = "";
+					document.getElementById("pass").value = sm3Digest(document.getElementById("pass").value);
+					return true;
+				}
+			}
+		</script>
+		<style>
+			fieldset {
+				width: 114ex;
+				display: inline-block;
+			}
+			.overflow {
+				overflow-y: auto;
+				width: 114ex;
+				height: 20ex;
+				max-height: 100ex;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>欢迎, {{ uname }}. <a href="/logout"/>注销</a></h1>
+		<a>您的钱包地址：</a></br>
+		<a>{{ address }}</a></br>
+		<a>您的余额：<b>{{ balance }}</b></a></br>
+		<fieldset>
+			<legend>发起交易</legend>
+			<form method="POST" action="/xaction" onsubmit="return checkForm()">
+				<table>
+					<tr>
+						<td>收币方地址：</td>
+						<td><input type="text" name="address" id="addr" size="110"></td>
+						<td><a id="checkaddr"></td>
+					</tr>
+					<tr>
+						<td>发送货币数额：</td>
+						<td><input type="text" name="amount" id="amount" size="3"></td>
+						<td><a id="checkamo"></td>
+					</tr>
+					<tr>
+						<td>登录密码：</td>
+						<td><input type="password" name="password" id="pass" size="30"></td>
+						<td><a id="checkpass"></td>
+					</tr>
+					<tr>
+						<td>共享密钥：</td>
+						<td><input type="password" name="key" id="key" size="110"></td>
+						<td><a id="checkkey"></td>
+					</tr>
+				</table>
+				<input type="submit" value="确认">
+			</form>
+		</fieldset></br>
+		<fieldset>
+			<legend>账单</legend>
+			<div class="overflow">
+				<table>
+					{% for value in result %}
+						<tr><td>{{ value }}</td></tr>
+					{% endfor %}
+				</table>
+			</div>
+		</fieldset>
+	</body>
+</html>

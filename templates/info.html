@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="refresh" content="3;url={{ prevpage }}">
+		<title>{{ title }}</title>
+		<script type="text/javascript">
+			function info() {
+				window.setInterval("countdown()", 1000);
+			}
+			function countdown() {
+				if(document.getElementById("msg").innerHTML!=1){
+					document.getElementById("msg").innerHTML=document.getElementById("msg").innerHTML-1;
+				}
+			}
+		</script>
+	</head>
+	<body onload="info()">
+		{{ message }}<span id="msg">3</span>秒返回上一个页面
+	</body>
+</html>
